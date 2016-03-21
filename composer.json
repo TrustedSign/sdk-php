@@ -1,0 +1,27 @@
+{
+    "name": "TrustedSign/sdk-php",
+    "type": "library",
+    "description": "Wrapper for TrustedSign's REST API",
+    "keywords": [],
+    "homepage": "https://trustedsign.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TrustedSign",
+            "homepage": "https://trustedsign.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "phpdocumentor/phpdocumentor": "*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4" : {
+            "TrustedSignSDK\\" : "src/"
+        }
+    }
+}
