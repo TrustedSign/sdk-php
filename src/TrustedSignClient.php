@@ -26,7 +26,7 @@ class TrustedSignClient
     /**
      * The default host for the API
      */
-    const DEFAULT_HOST = 'api.trustedsign.com';
+    const DEFAULT_HOST = 'api.trustedsign.com/app';
 
     /**
      * Whether to use SSL for API calls
@@ -62,7 +62,7 @@ class TrustedSignClient
             'ssl' => true
         ], $config);
 
-        if (!$config['app_id']) {
+        if (!$config['app_key']) {
             throw new Exceptions\SDKException('Required "app_key" key not supplied in config and could not find fallback environment variable "' . static::APP_KEY_ENV_NAME . '"');
         }
         if (!$config['app_secret']) {
@@ -103,7 +103,6 @@ class TrustedSignClient
             $endpoint
         );
         $request = new Request($fullUri);
-        $request->headers->set('Accept', 'application/json');
         $this->apiKey->setAuthorizationHeader($request->headers);
         var_dump($request->headers);
 
@@ -134,7 +133,8 @@ class TrustedSignClient
         return $this->sendRequest(
             'GET',
             $endpoint,
-            $params = []
+            $params = [],
+            true
         );
     }
 
@@ -153,7 +153,8 @@ class TrustedSignClient
         return $this->sendRequest(
             'POST',
             $endpoint,
-            $params
+            $params,
+            true
         );
     }
 
@@ -172,7 +173,8 @@ class TrustedSignClient
         return $this->sendRequest(
             'POST',
             $endpoint,
-            $params
+            $params,
+            true
         );
     }
 
@@ -191,7 +193,8 @@ class TrustedSignClient
         return $this->sendRequest(
             'DELETE',
             $endpoint,
-            $params
+            $params,
+            true
         );
     }
 

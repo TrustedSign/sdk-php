@@ -65,7 +65,7 @@ class ApiKey
             $this->secret
         );
 
-        $signature = hash(self::HASH_ALGO, $hashData);
+        $signature = hash(self::HASH_ALGO, implode("", $hashData));
         $header->set("App-Key", $this->key);
         $header->set("Nonce", $nonce);
         $header->set("Timestamp", $timestamp);
