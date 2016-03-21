@@ -1,5 +1,5 @@
 {
-    "name": "TrustedSign/sdk-php",
+    "name": "trustedsign/sdk-php",
     "type": "library",
     "description": "Wrapper for TrustedSign's REST API",
     "keywords": [],
