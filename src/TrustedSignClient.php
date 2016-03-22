@@ -250,7 +250,7 @@ class TrustedSignClient
                 // Method Not Allowed
                 throw new Exceptions\MethodNotAllowedException('', $statusCode);
             case 415:
-                // Method Not Allowed
+                // Unsupported Media Type
                 throw new Exceptions\UnsupportedMediaTypeException('', $statusCode);
 
             // And these are also bad
