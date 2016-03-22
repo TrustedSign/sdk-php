@@ -255,15 +255,13 @@ class Request
     public function send($params = null)
     {
         $this->params = $params;
+        $body = $this->prepareRequestBody();
         $headers = array();
 
         foreach ($this->headers->all() as $name => $values) {
             $name = implode('-', array_map('ucfirst', explode('-', $name)));
             $headers[$name] = $values[0];
         }
-
-        $body = $this->prepareRequestBody();
-
         $timeout = static::DEFAULT_REQUEST_TIMEOUT;
         if ($this->containsFileUploads()) {
             $timeout = static::DEFAULT_FILE_UPLOAD_REQUEST_TIMEOUT;
