@@ -60,9 +60,9 @@ class ApiKey
         $timestamp = time();
 
         $hashData = array(
+            $this->secret,
             $nonce,
-            $timestamp,
-            $this->secret
+            $timestamp
         );
 
         $signature = hash(self::HASH_ALGO, implode("", $hashData));

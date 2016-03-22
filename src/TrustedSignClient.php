@@ -59,7 +59,8 @@ class TrustedSignClient
             'app_key' => getenv(static::APP_KEY_ENV_NAME),
             'app_secret' => getenv(static::APP_SECRET_ENV_NAME),
             'adapter' => 'curl',
-            'ssl' => true
+            'ssl' => true,
+            'host' => static::DEFAULT_HOST
         ], $config);
 
         if (!$config['app_key']) {
@@ -104,7 +105,6 @@ class TrustedSignClient
         );
         $request = new Request($fullUri);
         $this->apiKey->setAuthorizationHeader($request->headers);
-        var_dump($request->headers);
 
         $response = $request->setMethod($method)
             ->send($params);
@@ -123,18 +123,19 @@ class TrustedSignClient
      * Sends a GET request to Server and returns the result.
      *
      * @param string $endpoint
+     * @param bool $returnResponse
      *
      * @return IResponse
      *
      * @throws Exceptions\SDKException
      */
-    public function get($endpoint)
+    public function get($endpoint, $returnResponse = false)
     {
         return $this->sendRequest(
             'GET',
             $endpoint,
             $params = [],
-            true
+            $returnResponse
         );
     }
 
@@ -143,18 +144,19 @@ class TrustedSignClient
      *
      * @param string $endpoint
      * @param array $params
+     * @param bool $returnResponse
      *
      * @return IResponse
      *
      * @throws Exceptions\SDKException
      */
-    public function post($endpoint, array $params = [])
+    public function post($endpoint, array $params = [], $returnResponse = false)
     {
         return $this->sendRequest(
             'POST',
             $endpoint,
             $params,
-            true
+            $returnResponse
         );
     }
 
@@ -163,18 +165,19 @@ class TrustedSignClient
      *
      * @param string $endpoint
      * @param array $params
+     * @param bool $returnResponse
      *
      * @return IResponse
      *
      * @throws Exceptions\SDKException
      */
-    public function put($endpoint, array $params = [])
+    public function put($endpoint, array $params = [], $returnResponse = false)
     {
         return $this->sendRequest(
             'POST',
             $endpoint,
             $params,
-            true
+            $returnResponse
         );
     }
 
@@ -183,18 +186,19 @@ class TrustedSignClient
      *
      * @param string $endpoint
      * @param array $params
+     * @param bool $returnResponse
      *
      * @return IResponse
      *
      * @throws Exceptions\SDKException
      */
-    public function delete($endpoint, array $params = [])
+    public function delete($endpoint, array $params = [], $returnResponse = false)
     {
         return $this->sendRequest(
             'DELETE',
             $endpoint,
             $params,
-            true
+            $returnResponse
         );
     }
 
@@ -245,6 +249,9 @@ class TrustedSignClient
             case 405:
                 // Method Not Allowed
                 throw new Exceptions\MethodNotAllowedException('', $statusCode);
+            case 415:
+                // Method Not Allowed
+                throw new Exceptions\UnsupportedMediaTypeException('', $statusCode);
 
             // And these are also bad
             case 500:
